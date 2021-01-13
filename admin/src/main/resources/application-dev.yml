@@ -1,8 +1,8 @@
 server:
-  port: 8443
-  http-port: 8080
+  port: 8080
   ssl:
-    enabled: true
+    port: 8443
+    enabled: false
     key-alias: tomcat
     protocol: TLS
     key-store: classpath:server.keystore
@@ -24,7 +24,7 @@ mybatis-plus:
 cross:
   allowed-header: "*"
   allowed-method: "*"
-  allowed-http-origin: http://localhost:8080
-  allowed-https-origin: https://localhost:8443
+  allowed-http-origin: "*"
+  allowed-https-origin: "https://localhost:8443"
 
   

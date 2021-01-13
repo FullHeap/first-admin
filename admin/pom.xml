@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.first</groupId>
-	<artifactId>first</artifactId>
+	<artifactId>admin</artifactId>
 	<version>1.0.0</version>
-	<name>first</name>
+	<name>admin</name>
 	<description>后台管理系统</description>
 
 	<properties>

@@ -29,27 +29,27 @@ public class SignInterceptor implements HandlerInterceptor {
 //		System.out.println(request.getRequestURI());
 //		System.out.println(request.getHeader("sign"));
 //		System.out.println(request.getHeader("envlop"));
-		BufferedReader br = null;
-		StringBuilder sb = new StringBuilder("");
-		try {
-			br = request.getReader();
-			String str;
-			while ((str = br.readLine()) != null) {
-				sb.append(str);
-			}
-			br.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (null != br) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		System.out.println(sb.toString());
+//		BufferedReader br = null;
+//		StringBuilder sb = new StringBuilder("");
+//		try {
+//			br = request.getReader();
+//			String str;
+//			while ((str = br.readLine()) != null) {
+//				sb.append(str);
+//			}
+//			br.close();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} finally {
+//			if (null != br) {
+//				try {
+//					br.close();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		System.out.println(sb.toString());
 		
 		
 

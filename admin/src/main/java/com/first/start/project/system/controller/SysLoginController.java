@@ -14,6 +14,8 @@ import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.first.start.common.util.IdUtils;
@@ -39,8 +41,8 @@ public class SysLoginController {
 	 * @param loginBody 用户名密码
 	 * @return 结果
 	 */
-//	@RequestMapping(path = "/systemLogin", method=RequestMethod.POST)
-	@PostMapping("/systemLogin")
+	@RequestMapping(path = "/systemLogin", method=RequestMethod.POST)
+//	@PostMapping("/systemLogin")
 	public AjaxResult systemLogin(@RequestBody LoginBody loginBody) {
 		AjaxResult ajax = AjaxResult.success();
 		

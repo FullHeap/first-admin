@@ -1,5 +1,8 @@
 package com.first.start.framework.corss;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -79,8 +82,12 @@ public class CrossConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin(httpOrigin);
-        config.addAllowedOrigin(httpsOrigin);
+        List<String> allowedOriginList = new ArrayList<String>();
+        //跨域请求
+        allowedOriginList.add("*");
+//        allowedOriginList.add(httpOrigin);
+//        allowedOriginList.add(httpsOrigin);
+        config.setAllowedOriginPatterns(allowedOriginList);
         config.addAllowedHeader(header);
         config.addAllowedMethod(method);
 //        config.setMaxAge(3600);
