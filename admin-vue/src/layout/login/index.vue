@@ -87,7 +87,7 @@ import mainFooter from "@/layout/components/MainFooter.vue";
 
 import { getVerifyCode, /* login */ } from "@/api/login"
 import Cookies from "js-cookie";
-import { encrypt, decrypt,getkeys } from '@/utils/crypt/jsrsacrypt'
+import { encrypt, decrypt/* ,getkeys */ } from '@/utils/crypt/jsrsacrypt'
 
 export default {
   name: "login",
@@ -129,7 +129,7 @@ export default {
   methods: {
     getImageCode(){
       getVerifyCode().then((response)=>{
-        getkeys();
+        // getkeys();
         console.log(response);
         this.vcUrl = "data:image/gif;base64,"+ response.imgBase64;
         this.ruleForm.uuid = response.uuid;

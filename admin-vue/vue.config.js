@@ -1,4 +1,5 @@
 const port = process.env.port || 80
+const target = process.env.target || 'http://localhost:8080'
 
 //添加图标路径解析
 const path = require('path')
@@ -18,10 +19,10 @@ module.exports = {
   devServer: {
     host: '0.0.0.0',
     port: port,
-    https: true,
+    https: false,
     proxy: {
       [process.env.VUE_APP_BASE_API]: {
-        target: 'https://localhost:8443',
+        target: target,
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
