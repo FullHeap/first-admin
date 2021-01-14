@@ -3,14 +3,13 @@ package com.first.start.project.system.service;
 import java.util.List;
 
 import com.first.start.project.system.entity.SysUser;
-
 public interface SysUserService {
 	/**
 	 * 查询用户列表信息
 	 *
 	 */
 
-	public List<SysUser> selectAll();
+	public List<SysUser> selectAll(long currentpage,long pagenum);
 
 	/**
 	 * 新增用户

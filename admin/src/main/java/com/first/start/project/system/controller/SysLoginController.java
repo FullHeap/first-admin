@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.first.start.common.util.IdUtils;
 import com.first.start.common.util.VerificationCode;
 import com.first.start.common.util.crypt.BASE64;
+import com.first.start.project.system.entity.SysUser;
 import com.first.start.project.system.model.AjaxResult;
 import com.first.start.project.system.model.LoginBody;
 import com.first.start.project.system.service.SysLoginService;
@@ -31,9 +32,9 @@ import com.first.start.project.system.service.SysLoginService;
  */
 @RestController
 public class SysLoginController {
-	
+
 	@Autowired
-    private SysLoginService loginService;
+	private SysLoginService loginService;
 
 	/**
 	 * 登录方法
@@ -41,22 +42,30 @@ public class SysLoginController {
 	 * @param loginBody 用户名密码
 	 * @return 结果
 	 */
-	@RequestMapping(path = "/systemLogin", method=RequestMethod.POST)
+	@RequestMapping(path = "/systemLogin", method = RequestMethod.POST)
 //	@PostMapping("/systemLogin")
 	public AjaxResult systemLogin(@RequestBody LoginBody loginBody) {
 		AjaxResult ajax = AjaxResult.success();
-		
-		ajax.put("token", loginBody.getUsername()+loginBody.getUuid());
-//		String result = loginService.login(loginBody);
-//		if(!"true".equals(result)) {
-//			ajax= AjaxResult.error("401", "账户信息校验失败");
-//		}
-		
+		ajax.put("token", loginBody.getUsername() + loginBody.getUuid());
+		SysUser user = loginService.selectUserByUserName(loginBody.getUsername());
+		if (user.getUserId() != null) {
+			if (loginBody.getPassword().equals(user.getPassword())) {
+				ajax.put("userid",user.getUserId());
+				ajax.put("msg", "账号密码一致");
+			}else {
+				ajax.put("code","0");
+				ajax.put("msg", "账号密码不一致");
+			}
+		}else {
+			ajax.put("code","-1");
+			ajax.put("msg", "未查询到该账户");
+		}
 		return ajax;
 	}
 
 	/**
 	 * 验证码获取
+	 * 
 	 * @return 结果
 	 */
 	@GetMapping("/getVerifyCode")
@@ -71,7 +80,7 @@ public class SysLoginController {
 			FastByteArrayOutputStream os = new FastByteArrayOutputStream();
 			VerificationCode.output(image, os);
 			String uuid = IdUtils.randomUUID();
-			
+
 			ajax.put("uuid", uuid);
 			ajax.put("imgBase64", BASE64.encode(os.toByteArray()));
 		} catch (IOException e) {
@@ -79,7 +88,7 @@ public class SysLoginController {
 		}
 		return ajax;
 	}
-	
+
 	/**
 	 * 获取路由信息
 	 * 
@@ -87,19 +96,19 @@ public class SysLoginController {
 	 */
 	@GetMapping("getRouters")
 	public AjaxResult getRouters() {
-		
+
 		List<Map<String, Object>> menuList = new ArrayList<Map<String, Object>>();
 		Map<String, Object> menu = new HashMap<String, Object>();
 		menu.put("name", "SystemIndex");
 		menu.put("path", "/system");
 		menu.put("component", "system");
-		
+
 		Map<String, Object> metaSystem = new HashMap<String, Object>();
-		
+
 		metaSystem.put("title", "系统管理");
 		metaSystem.put("icon", "el-icon-setting");
-		
-		menu.put("meta",metaSystem);
+
+		menu.put("meta", metaSystem);
 		List<Map<String, Object>> children = new ArrayList<Map<String, Object>>();
 
 		Map<String, Object> menuUser = new HashMap<String, Object>();
@@ -119,8 +128,7 @@ public class SysLoginController {
 		metaRole.put("icon", "el-icon-star-on");
 		menuRole.put("meta", metaRole);
 		children.add(menuRole);
-		
-		
+
 		Map<String, Object> menuHome = new HashMap<String, Object>();
 		menuHome.put("path", "/system/home");
 		menuHome.put("component", "system/home");
@@ -177,8 +185,6 @@ public class SysLoginController {
 		ajax.put("permissions", permissions);
 		return ajax;
 	}
-
-	
 
 	/**
 	 * 获取路由信息

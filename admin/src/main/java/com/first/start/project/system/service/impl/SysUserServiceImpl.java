@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.first.start.project.system.entity.SysUser;
 import com.first.start.project.system.mapper.SysUserMapper;
 import com.first.start.project.system.service.SysUserService;
@@ -20,10 +22,14 @@ public class SysUserServiceImpl implements SysUserService {
 	 * 
 	 */
 	@Override
-	public List<SysUser> selectAll() {
+	public List<SysUser> selectAll(long currentpage, long pagenum) {
+		SysUser user =new SysUser();
 		QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>();
-		List<SysUser> sysuser = sysusermapper.selectList(queryWrapper);
-		return sysuser;
+		//Ipage 中参数一是当前页，参数二是每页个数
+		 IPage<SysUser> Page = new Page<>(currentpage, pagenum);
+		// user.setTotal(Page.getTotal());
+		 List<SysUser> sysuser = sysusermapper.selectPage(Page, queryWrapper).getRecords();
+		 return sysuser;
 	}
 
 	/**
@@ -77,5 +83,6 @@ public class SysUserServiceImpl implements SysUserService {
 		sysusermapper.update(user, updateWrapper);
 		return;
 	}
+
 
 }

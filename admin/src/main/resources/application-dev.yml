@@ -12,9 +12,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test
+    url: jdbc:mysql://120.92.151.50:3306/dyjsj?characterEncoding=UTF-8
     username: root
-    password: P@ssw0rd
+    password: root
     
 mybatis-plus:
   global-config:

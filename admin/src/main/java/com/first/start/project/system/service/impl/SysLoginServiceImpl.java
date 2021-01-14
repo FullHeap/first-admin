@@ -14,14 +14,15 @@ public class SysLoginServiceImpl implements SysLoginService {
 	private SysUserMapper sysusermapper;
 
 	/**
-	 * 通过用户名查询
+	 * 通过用户名查询密码是否一致
 	 */
 	@Override
 	public SysUser selectUserByUserName(String username) {
 		QueryWrapper<SysUser> queryWrapper = new QueryWrapper<>();
-		queryWrapper.select("userid").eq("username", username);
-		SysUser user =sysusermapper.selectOne(queryWrapper);
-		return user;
+		queryWrapper.select().eq("username", username);
+		List<SysUser> user=sysusermapper.selectList(queryWrapper);
+	
+		return user.get(0);
 	}
 
 	@Override
