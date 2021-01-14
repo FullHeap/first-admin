@@ -26,6 +26,7 @@ const permission = {
       return new Promise((resolve, reject) => {
         login(username, password, code, uuid).then(res => {
           setToken(res.token)
+          sessionStorage.setItem("userid",username)
           commit('SET_TOKEN', res.token)
           resolve()
         }).catch(error => {

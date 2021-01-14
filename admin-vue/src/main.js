@@ -7,6 +7,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 //使用vue-axios 插件
 Vue.use(VueAxios, axios)
+//使用分页插件
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
