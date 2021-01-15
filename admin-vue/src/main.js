@@ -32,6 +32,13 @@ Vue.prototype.$message = ElementUI.Message;
 
 Vue.config.productionTip = false
 
+//挂载分页组件
+import Pagination from "@/components/Pagination";
+Vue.component('Pagination', Pagination)
+//挂载表格查询刷新
+import RightToolbar from "@/components/RightToolbar"
+Vue.component('RightToolbar', RightToolbar)
+
 //mock测试引入
 //import './mock/mock.js'
 

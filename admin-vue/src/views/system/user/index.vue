@@ -1,49 +1,89 @@
 <template>
   <div class="about">
-    <!-- <el-row>
-      <el-button>默认按钮</el-button>
-      <el-button type="primary" @click="test()">主要按钮</el-button>
-      <el-button type="success">成功按钮</el-button>
-      <el-button type="info">信息按钮</el-button>
-      <el-button type="warning">警告按钮</el-button>
-      <el-button type="danger">危险按钮</el-button>
-    </el-row>
+    <el-row :gutter="20">
+      <!--用户数据-->
+      <el-col :span="20" :xs="24">
+        <el-form
+          :model="queryParams"
+          ref="queryForm"
+          :inline="true"
+          v-show="showSearch"
+          label-width="68px"
+        >
+          <el-form-item label="用户名称" prop="userName">
+            <el-input
+              v-model="queryParams.userName"
+              placeholder="请输入用户名称"
+              clearable
+              size="small"
+              style="width: 240px"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+          <el-form-item label="手机号码" prop="phonenumber">
+            <el-input
+              v-model="queryParams.phonenumber"
+              placeholder="请输入手机号码"
+              clearable
+              size="small"
+              style="width: 240px"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+        
+          <el-form-item>
+            <el-button
+              type="cyan"
+              icon="el-icon-search"
+              size="mini"
+              @click="handleQuery"
+              >搜索</el-button
+            >
+            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+              >重置</el-button
+            >
+          </el-form-item>
+        </el-form>
 
-    <el-row>
-      <el-button plain>朴素按钮</el-button>
-      <el-button type="primary" plain>主要按钮</el-button>
-      <el-button type="success" plain>成功按钮</el-button>
-      <el-button type="info" plain>信息按钮</el-button>
-      <el-button type="warning" plain>警告按钮</el-button>
-      <el-button type="danger" plain>危险按钮</el-button>
-    </el-row>
+        <el-row :gutter="10" class="mb8">
+          <right-toolbar
+            :showSearch.sync="showSearch"
+            @queryTable="getList"
+          ></right-toolbar>
+        </el-row>
 
-    <el-row>
-      <el-button round>圆角按钮</el-button>
-      <el-button type="primary" round>主要按钮</el-button>
-      <el-button type="success" round>成功按钮</el-button>
-      <el-button type="info" round>信息按钮</el-button>
-      <el-button type="warning" round>警告按钮</el-button>
-      <el-button type="danger" round>危险按钮</el-button>
-    </el-row>
-
-    <el-row>
-      <el-button icon="el-icon-search" circle></el-button>
-      <el-button type="primary" icon="el-icon-edit" circle></el-button>
-      <el-button type="success" icon="el-icon-check" circle></el-button>
-      <el-button type="info" icon="el-icon-message" circle></el-button>
-      <el-button type="warning" icon="el-icon-star-off" circle></el-button>
-      <el-button type="danger" icon="el-icon-delete" circle></el-button>
-    </el-row> -->
-
-    <el-table  :data="userList" @selection-change="handleSelectionChange">
-          <el-table-column type="selection" width="40" align="center" />
-          <el-table-column label="用户编号" align="center" prop="userid" />
-          <el-table-column label="用户名称" align="center" prop="username" :show-overflow-tooltip="true" />
-          <el-table-column label="用户昵称" align="center" prop="nickname" :show-overflow-tooltip="true" />
-          <el-table-column label="部门" align="center" prop="deptid" :show-overflow-tooltip="true" />
-          <el-table-column label="手机号码" align="center" prop="phonenumber" width="120" />
-          <el-table-column label="状态" align="center" prop="status">
+        <el-table
+          v-loading="loading"
+          :data="userList"
+          @selection-change="handleSelectionChange"
+        >
+          <el-table-column type="selection" width="50" align="center" />
+          <el-table-column label="用户编号" align="center" prop="userId" />
+          <el-table-column
+            label="用户名称"
+            align="center"
+            prop="userName"
+            :show-overflow-tooltip="true"
+          />
+          <el-table-column
+            label="用户昵称"
+            align="center"
+            prop="nickName"
+            :show-overflow-tooltip="true"
+          />
+          <el-table-column
+            label="部门"
+            align="center"
+            prop="dept.deptName"
+            :show-overflow-tooltip="true"
+          />
+          <el-table-column
+            label="手机号码"
+            align="center"
+            prop="phonenumber"
+            width="120"
+          />
+          <el-table-column label="状态" align="center">
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.status"
@@ -52,11 +92,6 @@
                 @change="handleStatusChange(scope.row)"
               ></el-switch>
             </template>
-          </el-table-column>
-          <el-table-column label="创建时间" align="center" prop="createTime" width="160">
-            <!-- <template slot-scope="scope">
-              <span>{{ parseTime(scope.row.createTime) }}</span>
-            </template> -->
           </el-table-column>
           <el-table-column
             label="操作"
@@ -70,41 +105,41 @@
                 type="text"
                 icon="el-icon-edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:user:edit']"
-              >修改</el-button>
+                >修改</el-button
+              >
               <el-button
                 v-if="scope.row.userId !== 1"
                 size="mini"
                 type="text"
                 icon="el-icon-delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:user:remove']"
-              >删除</el-button>
+                >删除</el-button
+              >
               <el-button
                 size="mini"
                 type="text"
                 icon="el-icon-key"
                 @click="handleResetPwd(scope.row)"
-                v-hasPermi="['system:user:resetPwd']"
-              >重置</el-button>
+                >重置</el-button
+              >
             </template>
           </el-table-column>
-    </el-table>
-    <pagination
-          v-show="total>0"
+        </el-table>
+
+        <pagination
+          v-show="total > 0"
           :total="total"
-          :page.sync="queryParams.currentPage"
+          :page.sync="queryParams.pageNum"
           :limit.sync="queryParams.pageSize"
           @pagination="getList"
         />
-
-
-        
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
-import  {getUserInfo} from "@/api/user"
+import { getUserInfo } from "@/api/user";
 
 export default {
   name: "user",
@@ -113,8 +148,16 @@ export default {
   },
   data() {
     return {
-     // 查询参数
-    queryParams: {
+      // 遮罩层
+      loading: true,
+      // 显示搜索条件
+      showSearch: true,
+      // 用户表格数据
+      userList: null,
+      //总条数
+      total: 0,
+      // 查询参数
+      queryParams: {
         currentPage: 1,
         pageSize: 10,
         userName: undefined,
@@ -122,35 +165,36 @@ export default {
         status: undefined,
         deptId: undefined
       },
-  //总条数
-  total: 0,
-  //用户表格数据
-  userList: null
     };
   },
   methods: {
+    /** 搜索按钮操作 */
+    handleQuery() {
+      this.queryParams.pageNum = 1;
+      this.getList();
+    },
+    /** 重置按钮操作 */
+    resetQuery() {
+      this.dateRange = [];
+      this.resetForm("queryForm");
+      this.handleQuery();
+    },
     /** 查询用户列表 */
     getList() {
       getUserInfo(this.queryParams).then(response => {
-        console.log("用户列表"+JSON.stringify(response.userInfo));
-        
-          this.userList = response.userInfo;
-          this.total = response.total;
-        }
-      );
+        console.log("用户列表" + JSON.stringify(response.userInfo));
+        this.userList = response.userInfo;
+        this.total = response.total;
+        this.loading = false;
+      });
     },
-
-
-
 
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.userId);
       this.single = selection.length != 1;
       this.multiple = !selection.length;
-    },
-
-
+    }
   }
-}; 
+};
 </script>
