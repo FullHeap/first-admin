@@ -30,13 +30,12 @@ public class SysUserController {
 		for (int i = 0; i < userList.size(); i++) {
 			SysUser userInfo= userList.get(i);
 			Map<String, Object> user = new HashMap<String, Object>();
-			user.put("userid", userInfo.getUserId());
-			user.put("deptid", userInfo.getDeptId());
-			user.put("userid", userInfo.getUserId());
-			user.put("username", userInfo.getUserName());
-			user.put("nickname", userInfo.getNickName());
+			user.put("userId", userInfo.getUserId());
+			user.put("deptId", userInfo.getDeptId());
+			user.put("userName", userInfo.getUserName());
+			user.put("nickName", userInfo.getNickName());
 			user.put("email", userInfo.getEmail());
-			user.put("phonenumber", userInfo.getPhonenumber());
+			user.put("phoneNumber", userInfo.getPhonenumber());
 			user.put("sex", userInfo.getSex());
 			user.put("avatar", userInfo.getAvatar());
 			user.put("password", userInfo.getPassword());
