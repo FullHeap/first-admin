@@ -42,4 +42,9 @@ public interface SysUserService {
 	 */
 	public void updateUser(SysUser sysuser);
 
+	/**
+	 * 通过用户id修改用户状态
+	 */
+	public	void updateUser(Long userId,String status);
+
 }

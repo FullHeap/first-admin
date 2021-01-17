@@ -56,7 +56,7 @@ public class SysUserController {
 		AjaxResult ajax = AjaxResult.success();
 		ajax.put("userInfo", alluser);
 		ajax.put("total", userList.size());
-		System.out.println("共计多少"+userList.size());
+
 		return ajax;
 
 	}
@@ -66,43 +66,59 @@ public class SysUserController {
 	 */
 	@RequestMapping(path = "/updateUserInfo", method = RequestMethod.POST)
 	public AjaxResult updateUserInfo(@RequestBody SysUser sysuser) {
-		System.out.println("11111" + sysuser);
+		System.out.println("11111"+sysuser);
 		sysuserservice.updateUser(sysuser);
-
+			
 		AjaxResult ajax = AjaxResult.success();
 		ajax.put("msg", "修改成功");
-		return ajax;
+		return  ajax;
 	}
-
 	/**
 	 * 查询用户信息
 	 */
 	@GetMapping("/getUser")
 	public AjaxResult getUser(@RequestParam Long userId) {
-		System.out.println("用户id" + userId);
+		System.out.println("用户id"+userId);
 		List<SysUser> userList = sysuserservice.selectUser(userId);
-		SysUser userInfo = userList.get(0);
-		Map<String, Object> user = new HashMap<String, Object>();
-
-		user.put("userId", userInfo.getUserId());
-		user.put("deptId", userInfo.getDeptId());
-		user.put("userName", userInfo.getUserName());
-		user.put("nickName", userInfo.getNickName());
-		user.put("email", userInfo.getEmail());
-		user.put("phoneNumber", userInfo.getPhonenumber());
-		user.put("sex", userInfo.getSex());
-		user.put("avatar", userInfo.getAvatar());
-		user.put("password", userInfo.getPassword());
-		user.put("salt", userInfo.getSalt());
-		user.put("status", userInfo.getStatus());
-		user.put("delFlag", userInfo.getDelFlag());
-		user.put("loginip", userInfo.getLoginIp());
-		user.put("loginDate", userInfo.getLoginDate());
-		user.put("roles", userInfo.getRoles());
-		user.put("roleids", userInfo.getRoleIds());
-		user.put("postids", userInfo.getPostIds());
+			SysUser userInfo = userList.get(0);
+			Map<String, Object> user = new HashMap<String, Object>();
+			
+			user.put("userId", userInfo.getUserId());
+			user.put("deptId", userInfo.getDeptId());
+			user.put("userName", userInfo.getUserName());
+			user.put("nickName", userInfo.getNickName());
+			user.put("email", userInfo.getEmail());
+			user.put("phoneNumber", userInfo.getPhonenumber());
+			user.put("sex", userInfo.getSex());
+			user.put("avatar", userInfo.getAvatar());
+			user.put("password", userInfo.getPassword());
+			user.put("salt", userInfo.getSalt());
+			user.put("status", userInfo.getStatus());
+			user.put("delFlag", userInfo.getDelFlag());
+			user.put("loginip", userInfo.getLoginIp());
+			user.put("loginDate", userInfo.getLoginDate());
+			user.put("roles", userInfo.getRoles());
+			user.put("roleids", userInfo.getRoleIds());
+			user.put("postids", userInfo.getPostIds());
 		AjaxResult ajax = AjaxResult.success();
 		ajax.put("userInfo", user);
 		return ajax;
+	}
+	
+	
+	
+	
+	
+	/**
+	 * 通过用户id修改用户信息
+	 */
+	@RequestMapping(path = "/changeUserStatus", method = RequestMethod.POST)
+	public AjaxResult changeUserStatus(@RequestBody SysUser sysuser) {
+		System.out.println("11111"+sysuser);
+		sysuserservice.updateUser(sysuser.getUserId(),sysuser.getStatus());
+			
+		AjaxResult ajax = AjaxResult.success();
+		ajax.put("msg", "修改成功");
+		return  ajax;
 	}
 }

@@ -108,4 +108,24 @@ public class SysUserServiceImpl implements SysUserService {
 		return sysuser;
 	}
 
+/**
+ * 通过用户id 修改用户状态
+ */
+	/**
+	 * 修改用戶信息
+	 */
+	@Override
+	public void updateUser(Long userId,String status) {
+		UpdateWrapper<SysUser> updateWrapper = new UpdateWrapper<>();
+		updateWrapper.eq("userid", userId);
+		SysUser user = new SysUser();
+		user.setStatus(status);
+		sysusermapper.update(user, updateWrapper);
+		return ;
+	}
+
+
+
+
+
 }
