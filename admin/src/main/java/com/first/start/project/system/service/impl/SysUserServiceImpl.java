@@ -13,23 +13,24 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.first.start.project.system.entity.SysUser;
 import com.first.start.project.system.mapper.SysUserMapper;
 import com.first.start.project.system.service.SysUserService;
+
 @Service
 public class SysUserServiceImpl implements SysUserService {
 	@Autowired
 	private SysUserMapper sysusermapper;
+
 	/**
 	 * 查询所有用户信息列表
 	 * 
 	 */
 	@Override
 	public List<SysUser> selectAll(long currentpage, long pagenum) {
-		SysUser user =new SysUser();
 		QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>();
-		//Ipage 中参数一是当前页，参数二是每页个数
-		 IPage<SysUser> Page = new Page<>(currentpage, pagenum);
+		// Ipage 中参数一是当前页，参数二是每页个数
+		IPage<SysUser> Page = new Page<>(currentpage, pagenum);
 		// user.setTotal(Page.getTotal());
-		 List<SysUser> sysuser = sysusermapper.selectPage(Page, queryWrapper).getRecords();
-		 return sysuser;
+		List<SysUser> sysuser = sysusermapper.selectPage(Page, queryWrapper).getRecords();
+		return sysuser;
 	}
 
 	/**
@@ -80,9 +81,31 @@ public class SysUserServiceImpl implements SysUserService {
 		updateWrapper.eq("userid", sysuser.getUserId());
 		SysUser user = new SysUser();
 		user.setEmail(sysuser.getEmail());
+		user.setDelFlag(sysuser.getDelFlag());
+		user.setDeptId(sysuser.getDeptId());
+		user.setLoginDate(sysuser.getLoginDate());
+		user.setLoginIp(sysuser.getLoginIp());
+		user.setNickName(sysuser.getNickName());
+		user.setPassword(sysuser.getPassword());
+		user.setPhonenumber(sysuser.getPhonenumber());
+		user.setPostIds(sysuser.getPostIds());
+		user.setRoles(sysuser.getRoles());
+		user.setRoleIds(sysuser.getRoleIds());
+		user.setSalt(sysuser.getSalt());
+		user.setSex(sysuser.getSex());
+		user.setStatus(sysuser.getStatus());
+		user.setUserName(sysuser.getUserName());
+
 		sysusermapper.update(user, updateWrapper);
 		return;
 	}
 
+	@Override
+	public List<SysUser> selectUser(Long userId) {
+		QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>();
+		queryWrapper.eq("userId", userId);
+		List<SysUser> sysuser = sysusermapper.selectList(queryWrapper);
+		return sysuser;
+	}
 
 }
