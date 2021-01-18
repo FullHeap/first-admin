@@ -2,6 +2,8 @@ package com.first.start.project.system.service;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.first.start.project.system.entity.SysUser;
 
 public interface SysUserService {
@@ -10,13 +12,7 @@ public interface SysUserService {
 	 *
 	 */
 
-	public List<SysUser> selectAll(long currentpage, long pagenum);
-
-	/**
-	 * 通过用户Id获取用户信息
-	 * 
-	 */
-	public List<SysUser> selectUser(Long userId);
+	public IPage<SysUser> selectAll(Page<SysUser> pageparam,SysUser sysuser);
 
 	/**
 	 * 新增用户
@@ -45,6 +41,6 @@ public interface SysUserService {
 	/**
 	 * 通过用户id修改用户状态
 	 */
-	public	void updateUser(Long userId,String status);
+	public	void updateUserStatus(Long userId,String status);
 
 }

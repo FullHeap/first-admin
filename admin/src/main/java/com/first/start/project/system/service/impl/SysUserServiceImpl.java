@@ -3,6 +3,7 @@ package com.first.start.project.system.service.impl;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +25,27 @@ public class SysUserServiceImpl implements SysUserService {
 	 * 
 	 */
 	@Override
-	public List<SysUser> selectAll(long currentpage, long pagenum) {
+	public IPage<SysUser> selectAll(Page<SysUser> pageParam, SysUser userVo) {
 		QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>();
-		// Ipage 中参数一是当前页，参数二是每页个数
-		IPage<SysUser> Page = new Page<>(currentpage, pagenum);
-		// user.setTotal(Page.getTotal());
-		List<SysUser> sysuser = sysusermapper.selectPage(Page, queryWrapper).getRecords();
-		return sysuser;
+		// queryWrapper.orderByAsc("sort");
+		if (userVo == null) {
+			return sysusermapper.selectPage(pageParam, queryWrapper);
+		}
+		// 3 构造条件查询
+		String userName = userVo.getUserName();
+		System.out.println("用户名"+userName);
+		Long userId = userVo.getUserId();
+		String phoneNumber = userVo.getPhonenumber();
+		if (!StringUtils.isEmpty(userName)) {
+			queryWrapper.like("username",userName );
+		}
+		if (userId != null) {
+			queryWrapper.eq("userid", userId);
+		}
+		if (!StringUtils.isEmpty(phoneNumber)) {
+			queryWrapper.eq("phonenumber", phoneNumber);
+		}
+		return sysusermapper.selectPage(pageParam, queryWrapper);
 	}
 
 	/**
@@ -100,30 +115,19 @@ public class SysUserServiceImpl implements SysUserService {
 		return;
 	}
 
-	@Override
-	public List<SysUser> selectUser(Long userId) {
-		QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>();
-		queryWrapper.eq("userId", userId);
-		List<SysUser> sysuser = sysusermapper.selectList(queryWrapper);
-		return sysuser;
-	}
 
-/**
- * 通过用户id 修改用户状态
- */
 	/**
-	 * 修改用戶信息
+	 * 通过用户id 修改用户状态
 	 */
 	@Override
-	public void updateUser(Long userId,String status) {
+	public void updateUserStatus(Long userId, String status) {
 		UpdateWrapper<SysUser> updateWrapper = new UpdateWrapper<>();
 		updateWrapper.eq("userid", userId);
 		SysUser user = new SysUser();
 		user.setStatus(status);
 		sysusermapper.update(user, updateWrapper);
-		return ;
+		return;
 	}
-
 
 
 
