@@ -2,10 +2,12 @@ package com.first.start.framework.gen;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 
+@ConfigurationProperties(prefix = "gen")
 public class GlobalConfig {
 
     /**
