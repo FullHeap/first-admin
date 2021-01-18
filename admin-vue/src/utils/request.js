@@ -5,7 +5,8 @@ import { Notification, MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import errorCode from '@/utils/errorCode'
 //import { generatekey, encryptDes, decryptDes } from '@/utils/crypt/des'
-//import { signature,/* verify, */encrypt, decrypt } from '@/utils/crypt/jsrsacrypt'
+import { signature,/* verify, encrypt, decrypt*/ } from '@/utils/crypt/jsrsacrypt'
+import { parseTime } from '.'
 
 /* 设置请求全局属性 */
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8';
@@ -30,31 +31,38 @@ const service = axios.create({
 service.interceptors.request.use(
   req => {
 
-    console.log("req:"+req)
-    console.log("req.data:"+req.data)
-   /*  if (req.url == '/systemLogin') {
-      var key = generatekey(8);
-      // DES敏感字段加密
-      req.data.password = encryptDes(req.data.password, key);
-      // console.log("sign:"+req.headers.sign);
-      // console.log("signdata:"+JSON.stringify(req.data));
-
-      //秘钥封数字信封
-      req.headers.envlop = encrypt(key);
-      // console.log("key:"+key);
-      // console.log("envlop:"+req.headers.envlop);
-      console.log("envlopdec:" + decrypt(req.headers.envlop));
-
-
-      // console.log(key)
-      // console.log(req.data.password)
-      console.log(decryptDes(req.data.password, key))
-      //加签数字签名
-      req.headers.sign = signature(JSON.stringify(req.data));
-    }
+    //加签数字签名
+    // let newdate = new Date();
+    req.headers.timestamp = parseTime(new Date());
+    req.headers.appid = "appid";
+    req.headers.appsecret = "appsecret";
+    req.headers.msgid = "20210101000001";
+    req.headers.sign = signature(req.headers.appid+req.headers.appsecret+req.headers.timestamp);
     if ("" != JSON.stringify(req.data) && undefined != req.data) {
       console.log(req.data)
-    } */
+    }
+
+    console.log("req:" + JSON.stringify(req))
+    console.log("req.data:" + req.data)
+
+    /*  if (req.url == '/systemLogin') {
+         var key = generatekey(8);
+         // DES敏感字段加密
+         req.data.password = encryptDes(req.data.password, key);
+         // console.log("sign:"+req.headers.sign);
+         // console.log("signdata:"+JSON.stringify(req.data));
+   
+         //秘钥封数字信封
+         req.headers.envlop = encrypt(key);
+         // console.log("key:"+key);
+         // console.log("envlop:"+req.headers.envlop);
+         console.log("envlopdec:" + decrypt(req.headers.envlop));
+   
+         // console.log(key)
+         // console.log(req.data.password)
+         console.log(decryptDes(req.data.password, key))
+         
+       }*/
 
     return req
   },
@@ -121,6 +129,7 @@ function errorDeal(res) {
   // 获取错误信息
   const message = errorCode[code] || res.data.msg || errorCode['default']
 
+  console.log("code:"+code)
   if (code === 401) {
     MessageBox.confirm(
       '登录状态已过期，您可以继续留在该页面，或者重新登录',

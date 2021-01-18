@@ -17,6 +17,8 @@ import locale from 'element-ui/lib/locale/lang/en'
 import '@/assets/css/element-variables.scss'
 import '@/assets/css/main.scss'
 
+//全局方法
+import { parseTime } from "@/utils/index";
 
 
 Vue.use(ElementUI, { locale })
@@ -30,7 +32,9 @@ Vue.prototype.$prompt = ElementUI.MessageBox.prompt;
 Vue.prototype.$notify = ElementUI.Notification;
 Vue.prototype.$message = ElementUI.Message;
 
-Vue.config.productionTip = false
+Vue.prototype.parseTime = parseTime;
+
+Vue.config.productionTip = false;
 
 //挂载分页组件
 import Pagination from "@/components/Pagination";
@@ -38,6 +42,8 @@ Vue.component('Pagination', Pagination)
 //挂载表格查询刷新
 import RightToolbar from "@/components/RightToolbar"
 Vue.component('RightToolbar', RightToolbar)
+
+
 
 //mock测试引入
 //import './mock/mock.js'
