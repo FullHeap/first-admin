@@ -240,7 +240,7 @@
 </template>
 
 <script>
-import { getUserInfo, getUser, updateUserInfo, addUser,changeUserStatus} from "@/api/user";
+import { getUserInfo, updateUserInfo, addUser,changeUserStatus} from "@/api/user";
 export default {
   name: "user",
   created() {
@@ -277,6 +277,7 @@ export default {
         userName: undefined,
         phoneNumber: undefined,
         status: undefined,
+        userId:undefined,
         deptId: undefined
       },
       // 表单校验
@@ -311,7 +312,7 @@ export default {
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1;
-      this.getList();
+      this.getList(this.queryParams);
     },
     // 取消按钮
     cancel() {
@@ -363,14 +364,10 @@ export default {
       this.reset();
       this.open=true;
       // this.getTreeselect();
-      const userId = row.userId || this.ids;
-      getUser(userId).then(response => {
-        this.form = response.userInfo;
-        this.postOptions = response.userInfo.posts;
-        this.roleOptions = response.userInfo.roles;
-        this.form.postIds = response.userInfo.postIds;
-        this.form.roleIds = response.userInfo.roleIds;
-        this.form.status = response.userInfo.status;
+       this.queryParams.userId = row.userId || this.ids;
+      getUserInfo(this.queryParams).then(response => {
+        this.form = response.userInfo[0];
+         this.form.status = response.userInfo.status;
         this.title = "修改用户";
         console.log("用户状态" + JSON.stringify(this.form.status));
 

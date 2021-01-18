@@ -2,10 +2,11 @@ import request from '@/utils/request'
 
 // 获取用户列表
 export function getUserInfo(data) {
+  console.log("用户Id"+ JSON.stringify(data));
     return request({
       url: '/getUserInfo',
-      method: 'get',
-      params:data
+      method: 'post',
+      data:data
 
     })
   }
