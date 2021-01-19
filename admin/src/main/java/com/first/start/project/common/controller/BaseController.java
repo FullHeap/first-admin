@@ -76,6 +76,16 @@ public class BaseController {
 	protected AjaxResult toAjax(int rows) {
 		return rows > 0 ? AjaxResult.success() : AjaxResult.error();
 	}
+	
+	/**
+	 * 响应返回结果
+	 * 
+	 * @param 操作结果
+	 * @return 操作结果
+	 */
+	protected AjaxResult toAjax(boolean result) {
+		return result ? AjaxResult.success() : AjaxResult.error();
+	}
 
 	/**
 	 * 页面跳转

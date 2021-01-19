@@ -1,0 +1,73 @@
+源码类 ：AbstractTemplateEngine
+
+restControllerStyle=	${restControllerStyle}
+config=	${config}
+package=	${package}
+author=	${author}
+idType=	${idType}
+logicDeleteFieldName=	${logicDeleteFieldName}
+versionFieldName=	${versionFieldName}
+activeRecord=	${activeRecord}
+kotlin=	${kotlin}
+swagger2=	${swagger2}
+date=	${date}
+table=	${table}
+enableCache=	${enableCache}
+baseResultMap=	${baseResultMap}
+baseColumnList=	${baseColumnList}
+entity=	${entity}
+entitySerialVersionUID=	${entitySerialVersionUID}
+entityColumnConstant=	${entityColumnConstant}
+entityBuilderModel=	${entityBuilderModel}
+chainModel=	${chainModel}
+entityLombokModel=	${entityLombokModel}
+entityBooleanColumnRemoveIsPrefix=	${entityBooleanColumnRemoveIsPrefix}
+superEntityClass=	${superEntityClass}
+superMapperClassPackage=	${superMapperClassPackage}
+superMapperClass=	${superMapperClass}
+superServiceClassPackage=	${superServiceClassPackage}
+superServiceClass=	${superServiceClass}
+superServiceImplClassPackage=	${superServiceImplClassPackage}
+superServiceImplClass=	${superServiceImplClass}
+superControllerClassPackage=	${superControllerClassPackage}
+superControllerClass=	${superControllerClass}
+	
+	
+	
+restControllerStyle=	true
+config=	com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder@6e0dec4a
+package=	{Entity=com.first.start.project.system.system.entity, Mapper=com.first.start.project.system.system.mapper, ModuleName=system, Xml=com.first.start.project.system.system.mapper.xml, ServiceImpl=com.first.start.project.system.system.serviceImpl, Service=com.first.start.project.system.system.service, Controller=com.first.start.project.system.system.controller}
+author=	lyz
+idType=	ASSIGN_ID
+logicDeleteFieldName=	${logicDeleteFieldName}
+versionFieldName=	${versionFieldName}
+activeRecord=	false
+kotlin=	false
+swagger2=	false
+date=	2021-01-18
+
+fields=[
+TableField(convert=false, keyFlag=true, keyIdentityFlag=false, name=id, type=bigint(20), propertyName=id, columnType=LONG, comment=主键ID, fill=null, keyWords=false, columnName=id, customMap=null), 
+TableField(convert=false, keyFlag=false, keyIdentityFlag=false, name=name, type=varchar(30), propertyName=name, columnType=STRING, comment=姓名, fill=null, keyWords=false, columnName=name, customMap=null)
+
+table=	TableInfo(importPackages=[com.baomidou.mybatisplus.annotation.IdType, com.baomidou.mybatisplus.annotation.TableId, java.io.Serializable], convert=false, name=user, comment=, entityName=User, mapperName=UserMapper, xmlName=UserMapper, serviceName=UserService, serviceImplName=UserServiceImpl, controllerName=UserController, fields=[TableField(convert=false, keyFlag=true, keyIdentityFlag=false, name=id, type=bigint(20), propertyName=id, columnType=LONG, comment=主键ID, fill=null, keyWords=false, columnName=id, customMap=null), TableField(convert=false, keyFlag=false, keyIdentityFlag=false, name=name, type=varchar(30), propertyName=name, columnType=STRING, comment=姓名, fill=null, keyWords=false, columnName=name, customMap=null), TableField(convert=false, keyFlag=false, keyIdentityFlag=false, name=age, type=int(11), propertyName=age, columnType=INTEGER, comment=年龄, fill=null, keyWords=false, columnName=age, customMap=null), TableField(convert=false, keyFlag=false, keyIdentityFlag=false, name=email, type=varchar(50), propertyName=email, columnType=STRING, comment=邮箱, fill=null, keyWords=false, columnName=email, customMap=null)], havePrimaryKey=true, commonFields=[], fieldNames=id, name, age, email)
+
+enableCache=	false
+baseResultMap=	false
+baseColumnList=	false
+entity=	User
+entitySerialVersionUID=	true
+entityColumnConstant=	false
+entityBuilderModel=	false
+chainModel=	false
+entityLombokModel=	true
+entityBooleanColumnRemoveIsPrefix=	false
+superEntityClass=	${superEntityClass}
+superMapperClassPackage=	com.baomidou.mybatisplus.core.mapper.BaseMapper
+superMapperClass=	BaseMapper
+superServiceClassPackage=	com.baomidou.mybatisplus.extension.service.IService
+superServiceClass=	IService
+superServiceImplClassPackage=	com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
+superServiceImplClass=	ServiceImpl
+superControllerClassPackage=	${superControllerClassPackage}
+superControllerClass=	${superControllerClass}

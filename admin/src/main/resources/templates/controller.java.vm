@@ -1,7 +1,22 @@
 package ${package.Controller};
 
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import com.first.start.project.common.core.page.TableDataInfo;
+import com.first.start.project.system.model.AjaxResult;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
+import ${package.Entity}.${entity};
+import ${package.Service}.${table.serviceName};
 
 #if(${restControllerStyle})
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +48,7 @@ import lombok.extern.slf4j.Slf4j;
 #end
 @Slf4j
 #if(${swagger2})
-@Api(tags = "${table.controllerName}", value = "$!{table.comment}表管理")
+@Api(tags = "${table.controllerName}}                                                                value = "$!{table.comment}表管理")
 #end
 @RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
 #if(${kotlin})
@@ -45,7 +60,55 @@ public class ${table.controllerName} extends ${superControllerClass} {
 #else
 public class ${table.controllerName} {
 #end
+	@Autowired
+    private ${table.serviceName} ${table.name}Service;
+    
+    @GetMapping("/list")
+    public TableDataInfo list(${entity} ${table.name}){
+        startPage();
+        QueryWrapper<${entity}> queryWrapper = new QueryWrapper<${entity}>(${table.name});
+        List<${entity}> list = ${table.name}Service.list(queryWrapper);
+        return getDataTable(list);
+    }
 
+    /**
+     * 新增${entity}
+     */
+    @PostMapping
+    public AjaxResult add(@RequestBody ${entity} ${entity}){
+        return toAjax(${table.name}Service.saveOrUpdate(${entity}));
+    }
+
+    /**
+     * 修改${entity}
+     */
+    @PutMapping
+    public AjaxResult edit(@RequestBody ${entity} ${entity}){
+        return toAjax(${table.name}Service.updateById(${entity}));
+    }
+
+#foreach($field in ${table.fields})
+#if(${field.keyFlag})
+
+ 	/**
+     * 获取${entity}详细信息
+     */
+    @GetMapping(value = "/{${field.name}}")
+    public AjaxResult getInfo(@PathVariable("${field.name}") ${field.propertyType} ${field.name}){
+        return AjaxResult.success(${table.name}Service.getById(${field.name}));
+    }
+
+    /**
+     * 删除${entity}
+     */
+	@DeleteMapping("/{${field.name}s}")
+    public AjaxResult remove(@PathVariable("${field.name}s") List<${field.propertyType}> ${field.name}s){
+        return toAjax(${table.name}Service.removeByIds(${field.name}s));
+    }
+#end
+#end
 }
+
+
 
 #end
